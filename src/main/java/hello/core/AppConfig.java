@@ -1,5 +1,6 @@
 package hello.core;
 
+import hello.core.discount.DiscountPolicy;
 import hello.core.discount.FixDiscountPolicy;
 import hello.core.member.MemberService;
 import hello.core.member.MemberServiceImpl;
@@ -19,11 +20,29 @@ public class AppConfig {
 
     //AppConfig를 통해서 객체를 생성하고 연결하는 역할과 실행하는 역할이 명확하게 분리되었다.
 
+//    public MemberService memberService(){
+//        return new MemberServiceImpl(new MemoryMemberRepository());
+//    }
+//
+//    public OrderService orderService(){
+//        return new OrderServiceImpl(new MemoryMemberRepository(), new FixDiscountPolicy());
+//    }
+
+
+    //위 코드 리팩토링. 역할과 구현 클래스가 한눈에 들어오도록.
     public MemberService memberService(){
-        return new MemberServiceImpl(new MemoryMemberRepository());
+        return new MemberServiceImpl(MemberRepository());
+    }
+
+    private static MemoryMemberRepository MemberRepository() {
+        return new MemoryMemberRepository();
     }
 
     public OrderService orderService(){
-        return new OrderServiceImpl(new MemoryMemberRepository(), new FixDiscountPolicy());
+        return new OrderServiceImpl(MemberRepository(), discountPolicy());
+    }
+
+    public DiscountPolicy discountPolicy(){
+        return new FixDiscountPolicy();
     }
 }
