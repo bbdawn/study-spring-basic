@@ -1,7 +1,7 @@
 package hello.core;
 
 import hello.core.discount.DiscountPolicy;
-import hello.core.discount.FixDiscountPolicy;
+import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.MemberService;
 import hello.core.member.MemberServiceImpl;
 import hello.core.member.MemoryMemberRepository;
@@ -43,6 +43,8 @@ public class AppConfig {
     }
 
     public DiscountPolicy discountPolicy(){
-        return new FixDiscountPolicy();
+//        할인정책을 Fix에서 Rate로 바꾸고 싶다면 아래 코드만 바꾸면 됨!
+//        return new FixDiscountPolicy();
+        return new RateDiscountPolicy();
     }
 }
